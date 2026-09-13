@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Conversation {
+  id            String    @id @default(uuid())
+  phoneNumber   String
+  contactName   String?
+  mode          String    @default("BOT")
+  botState      String?
+  lastActivity  DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  messages      Message[]
+  processedMessages ProcessedMessage[]
+}
+
+model Message {
+  id            String    @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  content       String
+  role          String
+  waMessageId   String?
+  createdAt     DateTime  @default(now())
+}
+
+model ProcessedMessage {
+  id            String        @id @default(uuid())
+  conversationId String?
+  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  waMessageId   String    @unique
+  createdAt     DateTime  @default(now())
+}
