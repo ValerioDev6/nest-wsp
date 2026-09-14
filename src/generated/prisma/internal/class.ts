@@ -47,7 +47,7 @@ const config: runtime.GetPrismaClientConfig = {
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "sqlite",
+  "activeProvider": "postgresql",
   "postinstall": false,
   "inlineDatasources": {
     "db": {
@@ -57,8 +57,8 @@ const config: runtime.GetPrismaClientConfig = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Conversation {\n  id                String             @id @default(uuid())\n  phoneNumber       String\n  contactName       String?\n  mode              String             @default(\"BOT\")\n  botState          String?\n  lastActivity      DateTime           @default(now())\n  createdAt         DateTime           @default(now())\n  updatedAt         DateTime           @updatedAt\n  messages          Message[]\n  processedMessages ProcessedMessage[]\n}\n\nmodel Message {\n  id             String       @id @default(uuid())\n  conversationId String\n  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)\n  content        String\n  role           String\n  waMessageId    String?\n  createdAt      DateTime     @default(now())\n}\n\nmodel ProcessedMessage {\n  id             String        @id @default(uuid())\n  conversationId String?\n  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)\n  waMessageId    String        @unique\n  createdAt      DateTime      @default(now())\n}\n",
-  "inlineSchemaHash": "9c0e442fb37317451f43ca8bceb277c3f931c9b398fffa2e405967b9e22013e0",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Conversation {\n  id                String             @id @default(uuid())\n  phoneNumber       String\n  contactName       String?\n  mode              String             @default(\"BOT\")\n  botState          String?\n  lastActivity      DateTime           @default(now())\n  createdAt         DateTime           @default(now())\n  updatedAt         DateTime           @updatedAt\n  messages          Message[]\n  processedMessages ProcessedMessage[]\n}\n\nmodel Message {\n  id             String       @id @default(uuid())\n  conversationId String\n  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)\n  content        String\n  role           String\n  waMessageId    String?\n  createdAt      DateTime     @default(now())\n}\n\nmodel ProcessedMessage {\n  id             String        @id @default(uuid())\n  conversationId String?\n  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)\n  waMessageId    String        @unique\n  createdAt      DateTime      @default(now())\n}\n",
+  "inlineSchemaHash": "d6d7d7ce3c4c10f7c60ea2f3e1f16396dc1e1fa27c440d1435af070d642a1120",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},

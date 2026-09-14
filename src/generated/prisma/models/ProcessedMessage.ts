@@ -356,6 +356,7 @@ export type ProcessedMessageCreateOrConnectWithoutConversationInput = {
 
 export type ProcessedMessageCreateManyConversationInputEnvelope = {
   data: Prisma.ProcessedMessageCreateManyConversationInput | Prisma.ProcessedMessageCreateManyConversationInput[]
+  skipDuplicates?: boolean
 }
 
 export type ProcessedMessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -1119,6 +1120,7 @@ export type ProcessedMessageCreateManyArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many ProcessedMessages.
    */
   data: Prisma.ProcessedMessageCreateManyInput | Prisma.ProcessedMessageCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1137,6 +1139,7 @@ export type ProcessedMessageCreateManyAndReturnArgs<ExtArgs extends runtime.Type
    * The data used to create many ProcessedMessages.
    */
   data: Prisma.ProcessedMessageCreateManyInput | Prisma.ProcessedMessageCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
